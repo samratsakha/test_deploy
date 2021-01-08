@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request
+import flask
+from flask import Flask, render_template, request ,url_for
 import jsonify
 import requests
+import bs4
+import textblob
 from bs4 import BeautifulSoup
 from textblob import TextBlob
-from joblib import load
 import sklearn
-import warnings
 import re
+import joblib
+from joblib import load
 app = Flask(__name__)
-warnings.filterwarnings("ignore")
 
 @app.route('/',methods=['GET'])
 def Home():
@@ -27,7 +29,6 @@ def new_review(new_review):
     new_review = new_review.lower()
     new_review = new_review.split()
     all_stopwords = new_review
-    new_review = all_stopwords
     new_review = ' '.join(new_review)
     new_corpus = [new_review]
     new_X_test = cv_2.transform(new_corpus).toarray()
