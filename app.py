@@ -10,16 +10,17 @@ import sklearn
 import re
 import joblib
 from joblib import load
+
 app = Flask(__name__)
+
+def init():
+    cv_2 = load("cv_2.joblib")
+    loaded_model = load('model_updated.joblib') 
+
 
 @app.route('/',methods=['GET'])
 def Home():
     return render_template('index.html')
-
-
-cv_2 = load("cv_2.joblib")
-loaded_model = load('model_updated.joblib') 
-
 
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -63,6 +64,7 @@ def classify():
 
 
 if __name__=="__main__":
+    init()
     app.run(debug=True)
 
 
