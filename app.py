@@ -21,17 +21,13 @@ loaded_model = load('model_updated.joblib')
 
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
-wordnet = WordNetLemmatizer()
 def new_review(new_review):
     new_review = new_review
     new_review = re.sub('[^a-zA-Z]', ' ', new_review)
     new_review = new_review.lower()
     new_review = new_review.split()
-    all_stopwords = stopwords.words('english')
-    all_stopwords.remove('not')
-    new_review = [wordnet.lemmatize(word) for word in new_review if not word in set(all_stopwords)]
+    all_stopwords = new_review
+    new_review = all_stopwords
     new_review = ' '.join(new_review)
     new_corpus = [new_review]
     new_X_test = cv_2.transform(new_corpus).toarray()
