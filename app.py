@@ -23,19 +23,6 @@ loaded_model = load('model_updated.joblib')
 
 
 from sklearn.feature_extraction.text import TfidfVectorizer
-def new_review(new_review):
-    new_review = new_review
-    new_review = re.sub('[^a-zA-Z]', ' ', new_review)
-    new_review = new_review.lower()
-    new_review = new_review.split()
-    all_stopwords = new_review
-    new_review = ' '.join(new_review)
-    new_corpus = [new_review]
-    new_X_test = cv_2.transform(new_corpus).toarray()
-    pred = loaded_model.predict(new_X_test)
-    return pred
-
-
 
 
 
@@ -47,7 +34,18 @@ def classify():
     if request.method == 'POST':
 
         review_text=request.form['enter_review']
-        final_review = new_review(review_text)
+        
+        new_review = review_text
+        new_review = re.sub('[^a-zA-Z]', ' ', new_review)
+        new_review = new_review.lower()
+        new_review = new_review.split()
+        all_stopwords = new_review
+        new_review = ' '.join(new_review)
+        new_corpus = [new_review]
+        new_X_test = cv_2.transform(new_corpus).toarray()
+        pred = loaded_model.predict(new_X_test)
+        
+        final_review = pred
 
         if final_review == 1:
             output="Positive"
